@@ -1,4 +1,4 @@
-package cz.petrbalat.jpaspecification.dsl
+package cz.petrbalat.jpaspecification.specification
 
 import javax.persistence.criteria.*
 import kotlin.reflect.KProperty
@@ -7,7 +7,8 @@ import kotlin.reflect.KProperty
 class DslCriteriaBuilder<T : Any>(//private val rootClazz: KClass<T>,
         val root: Root<T>,
         val query: CriteriaQuery<*>,
-        val cb: CriteriaBuilder) {
+        val cb: CriteriaBuilder
+) {
 
     private val predicates: MutableList<Predicate> = mutableListOf()
 
@@ -42,6 +43,10 @@ class DslCriteriaBuilder<T : Any>(//private val rootClazz: KClass<T>,
     infix fun <R : Number?> Expression<R>.lt(number: Number): Predicate = cb.lt(this, number)
     infix fun <R : Number?> Expression<R>.le(number: Number): Predicate = cb.le(this, number)
 
+    fun lower(exp: Expression<String>): Expression<String> = cb.lower(exp)
+
+//    TODO rest of fun in CriteriaBuilder
+
     ///////////
 //extension infix fun for KProperty
 ///////////
@@ -59,6 +64,12 @@ class DslCriteriaBuilder<T : Any>(//private val rootClazz: KClass<T>,
 
     infix fun KProperty<String>.like(pattern: String): Predicate = rootPath.like(pattern)
 
+    infix fun KProperty<*>.`in`(values: Collection<*>): Predicate = rootPath.`in`(values)
+
+    infix fun KProperty<*>.`in`(exp: Expression<*>): Predicate = rootPath.`in`(exp)
+
+    fun KProperty<*>.`in`(vararg exp: Expression<*>): Predicate = rootPath.`in`(*exp)
+
     infix fun <R : Any?> KProperty<R>.equal(obj: Any): Predicate = rootPath.equal(obj)
     infix fun <R : Any?> KProperty<R>.notEqual(obj: Any): Predicate = rootPath.notEqual(obj)
 
@@ -66,4 +77,12 @@ class DslCriteriaBuilder<T : Any>(//private val rootClazz: KClass<T>,
     infix fun <R : Number?> KProperty<R>.ge(number: Number): Predicate = rootPath.ge(number)
     infix fun <R : Number?> KProperty<R>.lt(number: Number): Predicate = rootPath.lt(number)
     infix fun <R : Number?> KProperty<R>.le(number: Number): Predicate = rootPath.le(number)
+
+    //    TODO rest of fun in CriteriaBuilder
+
+    operator fun Predicate.plus(next: Predicate): Predicate = cb.and(this, next)
+
+    fun or(vararg restrictions: Predicate): Predicate = cb.or(*restrictions)
+
+    fun lower(exp: KProperty<String>): Expression<String> = cb.lower(exp.rootPath)
 }

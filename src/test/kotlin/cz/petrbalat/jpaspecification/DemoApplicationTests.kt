@@ -2,7 +2,7 @@ package cz.petrbalat.jpaspecification
 
 import cz.petrbalat.jpaspecification.entity.Product
 import cz.petrbalat.jpaspecification.repository.ProductRepository
-import cz.petrbalat.jpaspecification.specification.ProductDto
+import cz.petrbalat.jpaspecification.dto.ProductDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.*

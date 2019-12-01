@@ -1,4 +1,4 @@
-package cz.petrbalat.jpaspecification.specification
+package cz.petrbalat.jpaspecification.dto
 
 import cz.petrbalat.jpaspecification.entity.Product
 import org.springframework.data.jpa.domain.Specification

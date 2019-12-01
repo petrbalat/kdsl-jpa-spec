@@ -6,37 +6,30 @@ plugins {
 	kotlin("jvm") version "1.3.61"
 	kotlin("plugin.spring") version "1.3.61"
 	kotlin("plugin.jpa") version "1.3.61"
+	`java-library`
+	`maven-publish`
 }
 
 group = "cz.petrbalat"
 version = "0.1.0"
-java.sourceCompatibility = JavaVersion.VERSION_11
-
-val developmentOnly by configurations.creating
-configurations {
-	runtimeClasspath {
-		extendsFrom(developmentOnly)
-	}
-}
+java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-	implementation("org.flywaydb:flyway-core")
+	testImplementation("org.springframework.boot:spring-boot-starter-web")
 
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	testImplementation("org.flywaydb:flyway-core")
+
+	testImplementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("org.jetbrains.kotlin:kotlin-test")
 
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-//	runtimeOnly("com.h2database:h2")
-	runtimeOnly("org.hsqldb:hsqldb")
-
+	testRuntime("org.hsqldb:hsqldb")
+	testImplementation("org.jetbrains.kotlin:kotlin-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
@@ -58,7 +51,19 @@ repositories {
 	maven("https://petrbalat.bintray.com/kdsl-jpa-spec") {
 		credentials {
 			username = "petrbalat1"
-			password = "<API_KEY>"
+			password = System.getenv("JCENTER_API_KEY")
+		}
+	}
+}
+
+publishing {
+	publications {
+		create<MavenPublication>("maven") {
+			groupId = "cz.petrbalat"
+			artifactId = "kdsl-jpa-spec"
+			version = "0.1.0"
+
+			from(components["java"])
 		}
 	}
 }

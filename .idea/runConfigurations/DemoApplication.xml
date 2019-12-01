@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="kdsl-jpa-spec.test" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="cz.petrbalat.jpaspecification.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="SPRING_BOOT_MAIN_CLASS" value="cz.petrbalat.jpaspecification.DemoApplication" />
+    <option name="HIDE_BANNER" value="true" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

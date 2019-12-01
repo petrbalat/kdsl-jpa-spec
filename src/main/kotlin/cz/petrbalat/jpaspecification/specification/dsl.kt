@@ -1,4 +1,4 @@
-package cz.petrbalat.jpaspecification.dsl
+package cz.petrbalat.jpaspecification.specification
 
 import javax.persistence.criteria.CriteriaBuilder
 import javax.persistence.criteria.CriteriaQuery

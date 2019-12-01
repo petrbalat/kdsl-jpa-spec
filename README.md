@@ -1,7 +1,7 @@
 # Kotlin DSL for spring data JpaSpecification 
 
 Imagine that you have jpa entity Product, repository and dto for request params   
-(see [Product](src/main/kotlin/cz/petrbalat/jpaspecification/entity/Product.kt)
+(see [Product](src/test/kotlin/cz/petrbalat/jpaspecification/entity/Product.kt)
 )
 
 ```kotlin
@@ -43,7 +43,7 @@ class ProductApiController(private val repository: ProductRepository) {
 ```
 
 
-### With standart spring Specification<Product>(see [StandartProductDto](src/main/kotlin/cz/petrbalat/jpaspecification/specification/StandartProductDto.kt)): 
+### With standart spring Specification<Product>(see [StandartProductDto](src/test/kotlin/cz/petrbalat/jpaspecification/dto/StandartProductDto.kt)): 
 
 ```kotlin
 class StandartProductDto(val name: String? = null,
@@ -90,12 +90,12 @@ class StandartProductDto(val name: String? = null,
 }
 ```
 
-### With kdsl-jpa-spec dkl library (see [ProductDto](src/main/kotlin/cz/petrbalat/jpaspecification/specification/ProductDto.kt)):
+### With kdsl-jpa-spec dsl library (see [ProductDto](src/test/kotlin/cz/petrbalat/jpaspecification/dto/ProductDto.kt)):
 ```kotlin
-data class ProductDto(val name: String? = null,
-                      val weight: Double? = null,
-                      val visible: Boolean = true
-                      ) : Specification<Product> {
+class ProductDto(val name: String? = null,
+                 val weight: Double? = null,
+                 val visible: Boolean = true
+) : Specification<Product> {
 
     override fun toPredicate(root: Root<Product>, query: CriteriaQuery<*>, criteriaBuilder: CriteriaBuilder): Predicate? = dsl(root, query, criteriaBuilder) {
         add {
