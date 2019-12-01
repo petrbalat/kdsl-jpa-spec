@@ -8,8 +8,8 @@ plugins {
 	kotlin("plugin.jpa") version "1.3.61"
 }
 
-group = "com.example"
-version = "0.0.1-SNAPSHOT"
+group = "cz.petrbalat"
+version = "0.1.0"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 val developmentOnly by configurations.creating
@@ -51,5 +51,14 @@ tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=enable", "-progressive", "-Xuse-experimental=kotlin.Experimental")
 		jvmTarget = "1.8"
+	}
+}
+
+repositories {
+	maven("https://petrbalat.bintray.com/kdsl-jpa-spec") {
+		credentials {
+			username = "petrbalat1"
+			password = "<API_KEY>"
+		}
 	}
 }

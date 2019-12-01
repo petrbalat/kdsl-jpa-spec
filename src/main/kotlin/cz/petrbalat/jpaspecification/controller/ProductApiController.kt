@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RestController
 class ProductApiController(private val repository: ProductRepository) {
 
     @GetMapping
-    fun all(dto: ProductDto, pageable: Pageable): Page<Product> {
-        val products = repository.findAll(dto, pageable)
-        return products
-    }
+    fun all(dto: ProductDto, pageable: Pageable): Page<Product> = repository.findAll(dto, pageable)
 
 }
